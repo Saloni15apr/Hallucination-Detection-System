@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Prompt Submission</h2>
+
+<form method="POST">
+
+<textarea
+name="prompt"
+rows="8"
+placeholder="Enter your prompt here..."
+></textarea>
+
+<br><br>
+
+<button>Analyze</button>
+
+</form>
+
+{% if result %}
+
+<hr>
+
+<h2>Overall Factuality Score : {{ result.score }}</h2>
+
+<h3>Generated Response</h3>
+
+{% for sentence in result.response %}
+
+<p class="{{ sentence.class }}">
+
+{{ sentence.text }}
+
+</p>
+
+{% endfor %}
+
+{% endif %}
+
+</div>
+
+</body>
+</html>
