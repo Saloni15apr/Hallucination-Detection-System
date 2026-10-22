@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>History | HalluGuard</title>
+
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}">
+```
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+```
+<div class="logo">
+    <span class="logo-icon">◈</span>
+    Hallu<span>Guard</span>
+</div>
+
+<div class="nav-links">
+
+    <a href="/dashboard">Dashboard</a>
+
+    <a href="/history" class="active">History</a>
+
+    <a href="/help">Help</a>
+
+    <a href="/logout" class="logout-btn">Logout</a>
+
+</div>
+```
+
+</nav>
+
+<main class="history-page">
+
+```
+<section class="history-header">
+
+    <div>
+
+        <p class="eyebrow">YOUR ANALYTICS</p>
+
+        <h1>Analysis History</h1>
+
+        <p>Review your previous factuality analyses.</p>
+
+    </div>
+
+    <a href="/dashboard" class="analyze-new">
+        + New Analysis
+    </a>
+
+</section>
+
+
+{% if history %}
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <span class="stat-icon">◉</span>
+
+        <div>
+            <p>Total Analyses</p>
+            <h2>{{ history|length }}</h2>
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span class="stat-icon green-icon">✓</span>
+
+        <div>
+            <p>High Confidence</p>
+
+            <h2>
+                {% set high_count = namespace(value=0) %}
+
+                {% for item in history %}
+                    {% if item.score >= 0.8 %}
+                        {% set high_count.value = high_count.value + 1 %}
+                    {% endif %}
+                {% endfor %}
+
+                {{ high_count.value }}
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <span class="stat-icon red-icon">!</span>
+
+        <div>
+
+            <p>Potential Issues</p>
+
+            <h2>
+
+                {% set issue_count = namespace(value=0) %}
+
+                {% for item in history %}
+                    {% if item.score < 0.5 %}
+                        {% set issue_count.value = issue_count.value + 1 %}
+                    {% endif %}
+                {% endfor %}
+
+                {{ issue_count.value }}
+
+            </h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="history-toolbar">
+
+    <div class="search-box">
+
+        <span>⌕</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search your analyses...">
+
+    </div>
+
+</div>
+
+
+<section class="history-list" id="historyList">
+
+    {% for item in history %}
+
+    <div class="history-card">
+
+        <div class="history-main">
+
+            <div class="history-status
+                {% if item.score >= 0.8 %}
+                    status-green
+                {% elif item.score >= 0.5 %}
+                    status-yellow
+                {% else %}
+                    status-red
+                {% endif %}
+            ">
+
+                {% if item.score >= 0.8 %}
+                    ✓
+                {% elif item.score >= 0.5 %}
+                    ⚠
+                {% else %}
+                    ✕
+                {% endif %}
+
+            </div>
+
+
+            <div class="history-content">
+
+                <h3 class="history-prompt">
+                    {{ item.prompt }}
+                </h3>
+
+                <p class="history-explanation">
+                    {{ item.explanation }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="history-score">
+
+            <span>
+                {{ "%.0f"|format(item.score * 100) }}%
+            </span>
+
+            <div class="score-bar">
+
+                <div
+                    class="score-fill
+                    {% if item.score >= 0.8 %}
+                        fill-green
+                    {% elif item.score >= 0.5 %}
+                        fill-yellow
+                    {% else %}
+                        fill-red
+                    {% endif %}
+                    "
+                    <div class="score-fill"></div>
+                </div>
+
+            </div>
+
+            <small>Factuality</small>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+
+{% else %}
+
+<section class="empty-history">
+
+    <div class="empty-icon">
+        ◈
+    </div>
+
+    <h2>No analyses yet</h2>
+
+    <p>
+        Your analysis history will appear here.
+    </p>
+
+    <a href="/dashboard" class="analyze-new">
+        Start Your First Analysis
+    </a>
+
+</section>
+
+{% endif %}
+```
+
+</main>
+
+<script>
+
+const searchInput = document.getElementById("searchInput");
+
+if (searchInput) {
+
+    searchInput.addEventListener("input", function () {
+
+        const search = this.value.toLowerCase();
+
+        const cards =
+            document.querySelectorAll(".history-card");
+
+        cards.forEach(function (card) {
+
+            const text =
+                card.innerText.toLowerCase();
+
+            if (text.includes(search)) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+
+        });
+
+    });
+
+}
+
+</script>
+
+</body>
+
+</html>

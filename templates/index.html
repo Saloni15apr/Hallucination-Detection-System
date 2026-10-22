@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SelfChkGPT | AI Factuality Checker</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="landing-page">
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">◈</span>
+
+        Self<span>ChkGPT</span>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/" class="active">
+            Home
+        </a>
+
+        <a href="/dashboard">
+            Analyze
+        </a>
+
+        <a href="/history">
+            History
+        </a>
+
+        <a href="/help">
+            Help
+        </a>
+
+        <a href="/login" class="login-nav">
+            Login
+        </a>
+
+        <a href="/register" class="register-nav">
+            Get Started
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<main>
+
+<section class="landing-hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+
+            <span class="status-dot"></span>
+
+            AI FACTUALITY ENGINE
+
+        </div>
+
+
+        <h1>
+
+            Don't just trust AI.
+
+            <span>
+                Self-check it.
+            </span>
+
+        </h1>
+
+
+        <p>
+
+            SelfChkGPT analyzes AI-generated statements
+            and estimates their factuality using intelligent
+            language-model analysis.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a href="/dashboard"
+               class="hero-primary">
+
+                ✦ Analyze a Statement
+
+            </a>
+
+
+            <a href="#how-it-works"
+               class="hero-secondary">
+
+                See How It Works ↓
+
+            </a>
+
+        </div>
+
+
+        <div class="hero-note">
+
+            🔒 Your analysis history is securely associated
+            with your account.
+
+        </div>
+
+    </div>
+
+
+    <!-- VISUAL -->
+
+    <div class="hero-visual">
+
+        <div class="floating-card card-one">
+
+            <span class="mini-icon green-icon">
+                ✓
+            </span>
+
+            <div>
+
+                <strong>
+                    Fact detected
+                </strong>
+
+                <small>
+                    High confidence
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="ai-panel">
+
+            <div class="ai-panel-top">
+
+                <span>
+                    SelfChkGPT
+                </span>
+
+                <span class="online">
+                    ● ONLINE
+                </span>
+
+            </div>
+
+
+            <div class="fake-prompt">
+
+                "The Earth revolves around
+                the Sun."
+
+            </div>
+
+
+            <div class="fake-score">
+
+                <div class="fake-ring">
+
+                    <strong>
+                        96%
+                    </strong>
+
+                    <small>
+                        FACTUAL
+                    </small>
+
+                </div>
+
+
+                <div class="fake-details">
+
+                    <span class="fact">
+                        ✓ Supported
+                    </span>
+
+                    <span>
+                        Confidence: High
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="floating-card card-two">
+
+            <span class="mini-icon red-icon">
+                !
+            </span>
+
+            <div>
+
+                <strong>
+                    Potential issue
+                </strong>
+
+                <small>
+                    Needs verification
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TRUST BAR -->
+
+<section class="trust-bar">
+
+    <div>
+
+        <strong>
+            Powered by
+        </strong>
+
+        <span>
+            Gemini AI
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <strong>
+            Intelligent
+        </strong>
+
+        <span>
+            Factuality Analysis
+        </span>
+
+    </div>
+
+
+    <div>
+
+        <strong>
+            Personalized
+        </strong>
+
+        <span>
+            Analysis History
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="landing-section">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            WHY SELFCHKGPT
+        </p>
+
+        <h2>
+            AI can be powerful.
+            <span>It can also be wrong.</span>
+        </h2>
+
+        <p>
+            SelfChkGPT helps you identify potentially
+            unreliable AI-generated information before
+            you trust it.
+        </p>
+
+    </div>
+
+
+    <div class="landing-features">
+
+        <div class="landing-feature">
+
+            <div class="large-feature-icon">
+                ◉
+            </div>
+
+            <h3>
+                Factuality Score
+            </h3>
+
+            <p>
+                Get an easy-to-understand score showing
+                how factual an analyzed statement appears.
+            </p>
+
+        </div>
+
+
+        <div class="landing-feature">
+
+            <div class="large-feature-icon">
+                ✦
+            </div>
+
+            <h3>
+                AI-Powered Analysis
+            </h3>
+
+            <p>
+                Gemini analyzes your statement and provides
+                an explanation of the result.
+            </p>
+
+        </div>
+
+
+        <div class="landing-feature">
+
+            <div class="large-feature-icon">
+                ▣
+            </div>
+
+            <h3>
+                Analysis History
+            </h3>
+
+            <p>
+                Keep track of your previous checks and
+                review your results whenever you need them.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+
+<section class="how-section"
+         id="how-it-works">
+
+    <div class="section-heading">
+
+        <p class="eyebrow">
+            SIMPLE PROCESS
+        </p>
+
+        <h2>
+            How SelfChkGPT works
+        </h2>
+
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-number">
+                01
+            </div>
+
+            <h3>
+                Enter
+            </h3>
+
+            <p>
+                Paste an AI-generated statement
+                or response.
+            </p>
+
+        </div>
+
+
+        <div class="step-line"></div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                02
+            </div>
+
+            <h3>
+                Analyze
+            </h3>
+
+            <p>
+                SelfChkGPT sends the statement
+                to the AI analysis engine.
+            </p>
+
+        </div>
+
+
+        <div class="step-line"></div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                03
+            </div>
+
+            <h3>
+                Understand
+            </h3>
+
+            <p>
+                Receive a factuality score,
+                verdict and explanation.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="final-cta">
+
+    <div>
+
+        <p class="eyebrow">
+            READY?
+        </p>
+
+        <h2>
+            Check before you trust.
+        </h2>
+
+        <p>
+            Start analyzing AI-generated information
+            with SelfChkGPT.
+        </p>
+
+        <a href="/dashboard"
+           class="hero-primary">
+
+            ✦ Start Analysis
+
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <div class="logo">
+
+        <span class="logo-icon">◈</span>
+
+        Self<span>ChkGPT</span>
+
+    </div>
+
+    <p>
+        AI factuality analysis system
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
+

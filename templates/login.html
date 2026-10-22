@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login | SelfChkGPT</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body class="auth-page">
+
+
+<div class="auth-wrapper">
+
+
+    <div class="auth-brand">
+
+        <a href="/">
+
+            <span class="logo-icon">◈</span>
+
+            Self<span>ChkGPT</span>
+
+        </a>
+
+    </div>
+
+
+    <div class="auth-card">
+
+
+        <div class="auth-header">
+
+            <div class="auth-icon">
+                ◈
+            </div>
+
+            <p class="eyebrow">
+                WELCOME BACK
+            </p>
+
+            <h1>
+                Sign in to SelfChkGPT
+            </h1>
+
+            <p>
+                Continue analyzing AI-generated information.
+            </p>
+
+        </div>
+
+
+        {% if error %}
+
+        <div class="error-message">
+            ⚠ {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <form method="POST"
+              action="/login">
+
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required>
+
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required>
+
+
+            <button
+                type="submit"
+                class="auth-button">
+
+                Sign In →
+
+            </button>
+
+
+        </form>
+
+
+        <div class="auth-divider">
+            <span>OR</span>
+        </div>
+
+
+        <p class="auth-switch">
+
+            Don't have an account?
+
+            <a href="/register">
+                Create one
+            </a>
+
+        </p>
+
+
+        <a href="/"
+           class="back-home">
+
+            ← Back to SelfChkGPT
+
+        </a>
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+</html>
+

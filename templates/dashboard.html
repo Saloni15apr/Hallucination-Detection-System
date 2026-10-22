@@ -1,0 +1,416 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Hallucination Detector</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        <span class="logo-icon">◈</span>
+        Hallu<span>Guard</span>
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/dashboard" class="active">Dashboard</a>
+
+        <a href="/history">History</a>
+
+        <a href="/help">Help</a>
+
+        <a href="/logout" class="logout-btn">Logout</a>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="dashboard">
+
+    <section class="hero">
+
+        <div>
+
+            <p class="eyebrow">AI FACTUALITY ENGINE</p>
+
+            <h1>
+                Detect AI hallucinations
+                <span>with confidence.</span>
+            </h1>
+
+            <p class="hero-description">
+                Analyze statements and AI-generated content using
+                intelligent factuality analysis powered by Gemini.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ANALYZER -->
+
+    <section class="analyzer-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <h2>Analyze a Statement</h2>
+
+                <p>
+                    Enter a statement or AI-generated response below.
+                </p>
+
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                AI Engine Online
+            </div>
+
+        </div>
+
+
+        <form method="POST" id="analysisForm">
+
+            <div class="textarea-wrapper">
+
+                <textarea
+                    name="prompt"
+                    id="prompt"
+                    rows="8"
+                    placeholder="Paste your statement or AI-generated content here..."
+                    required></textarea>
+
+                <div class="char-count">
+                    <span id="charCount">0</span> characters
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="analyze-btn"
+                    id="analyzeBtn">
+
+                    <span class="btn-icon">✦</span>
+
+                    <span id="buttonText">
+                        Start Analysis
+                    </span>
+
+                </button>
+
+                <button
+                    type="button"
+                    class="clear-btn"
+                    onclick="clearAnalysis()">
+
+                    Clear
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    {% if result %}
+
+    <!-- RESULT -->
+
+    <section class="result-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <p class="eyebrow">ANALYSIS COMPLETE</p>
+
+                <h2>Factuality Report</h2>
+
+            </div>
+
+            <button
+                class="copy-btn"
+                onclick="copyResult()">
+
+                📋 Copy Result
+
+            </button>
+
+        </div>
+
+
+        <div class="result-grid">
+
+
+            <!-- SCORE -->
+
+            <div class="score-card">
+
+                <div class="score-ring"
+                     style="--score: {{ result.score * 100 }}%;">
+
+                    <div class="score-inner">
+
+                        <span class="score-number">
+                            {{ "%.0f"|format(result.score * 100) }}%
+                        </span>
+
+                        <span class="score-label">
+                            FACTUAL
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                {% set score = result.score %}
+
+                {% if score >= 0.8 %}
+
+                    <div class="verdict true">
+                        ● Highly Factual
+                    </div>
+
+                {% elif score >= 0.5 %}
+
+                    <div class="verdict uncertain">
+                        ● Uncertain
+                    </div>
+
+                {% else %}
+
+                    <div class="verdict false">
+                        ● Potential Hallucination
+                    </div>
+
+                {% endif %}
+
+
+                <p class="score-description">
+                    Based on the AI factuality analysis of your statement.
+                </p>
+
+            </div>
+
+
+            <!-- RESPONSE -->
+
+            <div class="analysis-card">
+
+                <div class="analysis-header">
+
+                    <h3>Analysis Result</h3>
+
+                    <span class="ai-badge">
+                        ✦ Gemini
+                    </span>
+
+                </div>
+
+
+                <div id="resultText">
+
+                {% for sentence in result.response %}
+
+                    <div class="result-message {{ sentence.class }}">
+
+                        {% if sentence.class == "green" %}
+
+                            <span class="result-icon">✓</span>
+
+                        {% elif sentence.class == "yellow" %}
+
+                            <span class="result-icon">⚠</span>
+
+                        {% else %}
+
+                            <span class="result-icon">✕</span>
+
+                        {% endif %}
+
+                        <p>{{ sentence.text }}</p>
+
+                    </div>
+
+                {% endfor %}
+
+                </div>
+
+
+                <button
+                    class="new-analysis"
+                    onclick="clearAnalysis()">
+
+                    ↻ Analyze Another
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- FEATURES -->
+
+    <section class="feature-section">
+
+        <div class="feature-card">
+
+            <div class="feature-icon">⚡</div>
+
+            <h3>Fast Analysis</h3>
+
+            <p>
+                Get AI-powered factuality results in seconds.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">◉</div>
+
+            <h3>Confidence Score</h3>
+
+            <p>
+                Understand how reliable your statement is.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">▣</div>
+
+            <h3>Saved History</h3>
+
+            <p>
+                Review your previous analyses anytime.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- LOADING OVERLAY -->
+
+<div class="loading-overlay" id="loadingOverlay">
+
+    <div class="loader-card">
+
+        <div class="loader"></div>
+
+        <h3>Analyzing your statement</h3>
+
+        <p>
+            Gemini is evaluating factuality...
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const textarea = document.getElementById("prompt");
+const charCount = document.getElementById("charCount");
+
+if (textarea) {
+
+    textarea.addEventListener("input", function() {
+
+        charCount.textContent = this.value.length;
+
+    });
+
+}
+
+
+const form = document.getElementById("analysisForm");
+
+if (form) {
+
+    form.addEventListener("submit", function() {
+
+        document.getElementById("loadingOverlay")
+            .classList.add("show");
+
+        document.getElementById("analyzeBtn")
+            .disabled = true;
+
+        document.getElementById("buttonText")
+            .textContent = "Analyzing...";
+
+    });
+
+}
+
+
+function clearAnalysis() {
+
+    if (textarea) {
+
+        textarea.value = "";
+
+        charCount.textContent = "0";
+
+        textarea.focus();
+
+    }
+
+}
+
+
+function copyResult() {
+
+    const result = document.getElementById("resultText");
+
+    if (!result) return;
+
+    navigator.clipboard.writeText(result.innerText);
+
+    alert("Analysis copied!");
+
+}
+
+</script>
+
+</body>
+</html>
+```
